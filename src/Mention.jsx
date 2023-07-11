@@ -219,14 +219,15 @@ export default function EditorView() {
     <div
       style={{
         position: "fixed",
-        width: 500,
-        backgroundColor: "#ededed",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
+        inset: 0,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
-      <Editor ref={editorRef} editorState={editorState} onChange={onChange} />
+      <div>
+        <Editor ref={editorRef} editorState={editorState} onChange={onChange} />
+      </div>
 
       <Suggestions {...activeSuggestion} onSelect={handleSuggestionSelected} />
     </div>
