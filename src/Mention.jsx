@@ -54,7 +54,9 @@ function getInsertRange(activeSuggestion, editorState) {
   const end = selection.getAnchorOffset();
   const block = content.getBlockForKey(anchorKey);
   const text = block.getText();
-  const start = text.substring(0, end).lastIndexOf(PREFIX);
+  const start = text
+    .substring(0, end)
+    .lastIndexOf(`${PREFIX}${activeSuggestion.searchText}`);
 
   return {
     start,
@@ -210,7 +212,9 @@ export default function EditorView() {
   };
 
   const handleSuggestionSelected = (text) => {
-    onChange(addSuggestion(editorState, activeSuggestion, text));
+    onChange(
+      addSuggestion(editorState, activeSuggestion?.activeSuggestion, text)
+    );
     setActiveSuggestions(null);
     editorRef?.current?.focus();
   };
@@ -225,11 +229,14 @@ export default function EditorView() {
         alignItems: "center",
       }}
     >
-      <div>
+      <div style={{ height: 400, width: 700, background: "#ededed" }}>
         <Editor ref={editorRef} editorState={editorState} onChange={onChange} />
       </div>
 
-      <Suggestions {...activeSuggestion} onSelect={handleSuggestionSelected} />
+      <Suggestions
+        {...activeSuggestion?.activeSuggestion}
+        onSelect={handleSuggestionSelected}
+      />
     </div>
   );
 }
